@@ -66,6 +66,39 @@ func toMapUsingTagWithCachedType(t reflect.Type, obj interface{}) map[string]int
 	return m
 }
 
+// This function collects only the names
+// that will be used from the type
+// this should save several calls to `Field(i).Tag.Get("foo")`
+// which might improve the performance by a lot.
+func getTagNames(f interface{}) []string {
+	t := reflect.TypeOf(f)
+	resp := []string{}
+	for i := 0; i < t.NumField(); i++ {
+		resp = append(resp, t.Field(i).Tag.Get("foo"))
+	}
+	return resp
+}
+
+var tagNamesCache = map[reflect.Type][]string{}
+
+func toMapUsingCachedTagNames(obj interface{}) map[string]interface{} {
+	t := reflect.TypeOf(obj)
+	v := reflect.ValueOf(obj)
+	m := map[string]interface{}{}
+
+	names, found := tagNamesCache[t]
+	if !found {
+		names = getTagNames(obj)
+		tagNamesCache[t] = names
+	}
+
+	for i := 0; i < v.NumField(); i++ {
+		m[names[i]] = v.Field(i).Interface()
+	}
+
+	return m
+}
+
 func toMapWithNoReflection(obj Foo) map[string]interface{} {
 	return map[string]interface{}{
 		"A": obj.A,

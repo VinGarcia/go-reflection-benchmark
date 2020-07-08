@@ -53,6 +53,12 @@ func BenchmarkReflection(b *testing.B) {
 		}
 	})
 
+	b.Run("testing toMapUsingCachedTagNames", func(b *testing.B) {
+		for i := 0; i < b.N; i++ {
+			result = toMapUsingCachedTagNames(fs[i%100])
+		}
+	})
+
 	is := []interface{}{}
 	for i := 0; i < 100; i++ {
 		is = append(is, Foo{
