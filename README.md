@@ -1,6 +1,11 @@
 # Benchmarking Reflection in Go
 
-This repository was created to test how much slower is the code when we use reflections.
+This repository was created compare the performance of different techniques
+for serializing structs as maps in Go.
+
+The motivation for these tests arrived when studying the interfaces of
+different database tools such as GORM, Gorp, the bigquery library for Go
+and others.
 
 ## Results
 
@@ -47,4 +52,3 @@ uses no abstractions we can conclude that:
    Caching on the method that uses the attribute names improved the speed in **13.37%**
 
    Caching on the method that uses the tags improved the speed in **9.69%**
-
