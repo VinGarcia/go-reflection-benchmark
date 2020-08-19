@@ -1,3 +1,3 @@
 
-bench:
-	go test -bench=. -benchtime=15s
+reading-tags:
+	go test -bench=. ./readingtags/... -benchtime=1s
