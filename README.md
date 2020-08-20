@@ -12,13 +12,13 @@ and others.
 You can run the benchmark yourself using the command:
 
 ```bash
-make bench
+make reading-tags TIME=15s
 ```
 
 The result on my machine was as follows:
 
 ```
-go test -bench=. -benchtime=15s
+go test -bench=. ./readingtags/... -benchtime=15s
 goos: linux
 goarch: amd64
 pkg: github.com/vingarcia/go-reflection-benchmark
